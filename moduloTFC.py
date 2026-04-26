@@ -157,5 +157,5 @@ def angulo_disparo (xcero):
 	Esta función nos devuelve el ángulo con el que debemos disparar para acertar
 	un objetivo en un punto x usando rootscalar
 	'''
-	angulo = root_scalar(funcion_de_error, args=(xcero), bracket=[0, np.pi/2], method = 'bisección')
+	angulo = root_scalar(funcion_de_error, args=(xcero), bracket=[0, np.pi/2], method = 'bisect')
 	return angulo.root
