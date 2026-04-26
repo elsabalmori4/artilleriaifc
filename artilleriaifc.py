@@ -5,7 +5,8 @@ una velocidad inicial de 500 m/s a una altura de 1.5 m.
 import numpy as np
 import unidades as u
 import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp, root_scalar
+from scipy.integrate import solve_ivp
+from scipy.optimize import root_scalar
 import moduloTFC as mod
 
 v0 = 500*u.m/u.s
