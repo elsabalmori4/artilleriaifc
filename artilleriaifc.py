@@ -4,7 +4,6 @@ una velocidad inicial de 500 m/s a una altura de 1.5 m.
 '''
 import numpy as np
 import unidades as u
-import cinematica as cn
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp, root_scalar
 import moduloTFC as mod
