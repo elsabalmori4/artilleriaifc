@@ -1,6 +1,6 @@
 import moduloTFC as mod
 
-objetivo= eval(input('Introduzca ángulo de disparo:'))
+objetivo= eval(input('Introduzca distancia al objetivo:'))
 
 angulo = mod.angulo_disparo(objetivo)
 print(angulo)
