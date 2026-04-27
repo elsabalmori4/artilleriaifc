@@ -87,7 +87,18 @@ def interpolación (x1, x2, y1, y2):
 	n = y1 - m*x1
 	x = -n/m
 	return x
-	
+
+def angulo_teorico (objetivox):
+	'''
+	Esta función devuelve los 2 ángulos TEÓRICOS sin rozamiento con los que alcanzar un objetivo de disparo
+	'''
+	v0 = 700
+	a = 0.5*g*objetivox/v0**2
+	c = -a
+	angulo1 = (-1+np.sqrt(1-4*a*c))/2*a
+	angulo2 = (-1-np.sqrt(1-4*a*c))/2*a
+	return angulo1, angulo2
+
 
 def alcance (theta):
 	if type(theta) == np.ndarray:
@@ -100,7 +111,7 @@ def alcance (theta):
 def alcance_simple (theta):
 		'''
 		Esta función nos calcula el alcande que tendrá un proyectil de artillería
-		dado un ángulo de disparo concreto
+		dado un ángulo de disparo y una velocidad concretos
 		'''
 		alpha = np.radians(theta)
 		v = 700
@@ -183,6 +194,7 @@ def angulo_disparo (objetivox):
 	if objetivox > maximizacion(alcance_neg):
 		return 'ERROR: El alcance seleccionado es mayor que el alcance máximo del proyectil'
 	else:
-	
-		angulo = root_scalar(funcion_de_error, args=(objetivox), bracket=[30, 70])
-		return 'El ángulo de disparo requerido es: ' +str(angulo.root)
+		angteorico1, angteorico2 = angulo_teorico(objetivox)
+		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1 )
+		angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2 )
+		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root) ' y ' +str(angulo2.root)
