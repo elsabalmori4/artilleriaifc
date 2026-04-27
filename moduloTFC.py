@@ -197,7 +197,7 @@ def angulo_disparo (objetivox):
 		return 'ERROR: El alcance seleccionado es mayor que el alcance máximo del proyectil'
 	else:
 		angteorico1, angteorico2 = angulo_teorico(objetivox)
-		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1 )
-		#angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2 )
+		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1, method = 'secant' )
+		#angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2, method = 'secant' )
 		#El angulo 2 da fallo por alguna razon
 		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root)
