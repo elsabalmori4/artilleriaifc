@@ -34,9 +34,6 @@ def alcancemax_tiroparabolico (v0x, v0y, y0 = 0):
 	'''
 	t = (2*(y0+v0y))/g
 	return v0x*t
-
-
-
 	
 	
 def polares_a_cartesianas (r, theta):
@@ -85,7 +82,6 @@ def interpolación (x1, x2, y1, y2):
 	x = -n/m
 	return x
 	
-
 
 def alcance (theta):
 	'''
@@ -139,8 +135,6 @@ def alcance (theta):
 	plt.grid()
 	plt.show()
 	return ('El alcance máximo para theta = ' +str(theta) + 'º es ' +str(xcero)+' m')  
-	
-
 
 	
 def funcion_de_error(angulo, objetivox):
@@ -150,7 +144,6 @@ def funcion_de_error(angulo, objetivox):
 	'''
 	return alcance(angulo)- objetivox
 	
-
 
 def angulo_disparo (xcero):
 	'''
