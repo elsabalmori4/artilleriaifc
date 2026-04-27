@@ -197,4 +197,4 @@ def angulo_disparo (objetivox):
 		angteorico1, angteorico2 = angulo_teorico(objetivox)
 		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1 )
 		angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2 )
-		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root) ' y ' +str(angulo2.root)
+		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root) +str(angulo2.root)
