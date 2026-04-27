@@ -3,6 +3,7 @@ Módulo para la simulación del tiro parabólico con rozamiento
 '''
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import unidades as u
 from scipy.integrate import solve_ivp
 from scipy.optimize import root_scalar
@@ -35,8 +36,6 @@ def alcancemax_tiroparabolico (v0x, v0y, y0 = 0):
 	'''
 	t = (2*(y0+v0y))/g
 	return v0x*t
-
-
 
 	
 	
@@ -96,8 +95,7 @@ def angulo_teorico (objetivox):
 	a = 0.5*g*objetivox/v0**2
 	c = -a
 	angulo1 = (-1+np.sqrt(1-4*a*c))/2*a
-	angulo2 = (-1-np.sqrt(1-4*a*c))/2*a
-	return angulo1, angulo2
+	return angulo1
 
 
 def alcance (theta):
@@ -119,11 +117,11 @@ def alcance_simple (theta):
 		v0 = v*u.m/u.s
 	
 		v0x, v0z = polares_a_cartesianas(v0, alpha) #Obtenemos las componentes iniciales de v
-		x0, z0, t0 = 0, 0, 0
-		ni = 5000
-		xmax = alcancemax_tiroparabolico(v0x, v0z)
+		x0, z0, t0 = 0, 1.5, 0
+		ni = 1000
+		xmax = alcancemax_tiroparabolico(v0x, v0z, z0)
 		tmax = 2*v0*np.sin(alpha)/g
-		tf = tmax
+		tf= tmax
 
 	
 		x, z, vx, vz = integracion(funcion_integracion, t0, tf, ni, x0, z0, v0x, v0z) #Integramos las ecuaciones diferenciales
@@ -151,15 +149,58 @@ def alcance_simple (theta):
 		puntoszfinal = np.append(puntosz, 0)
 
 		#Se representa z frente a x
-		#plt.figure()
-		#plt.plot(puntosxfinal, puntoszfinal)
-		#plt.title(r'Trayectoria disparo con rozamiento para $\theta$ = 45º')
-		#plt.xlabel('x (m)')
-		#plt.ylabel('z (m)')
-		#plt.grid()
-		#plt.show()
+		plt.figure()
+		plt.plot(puntosxfinal, puntoszfinal)
+		plt.title(r'Trayectoria disparo con rozamiento para $\theta$ = 45º')
+		plt.xlabel('x (m)')
+		plt.ylabel('z (m)')
+		plt.grid()
+		plt.show()
+		
+		#ANIMACIÓN
+		animar_trayectoria(v0,theta, z0, ni)
 		return xcero
 	
+def animar_trayectoria(v0, theta_, z0, ni):
+	'''
+	Esta función realiza la animación de la trayectoria de un proyectil 
+	dado un ángulo de disparo y velocidad inicial.
+	'''
+	theta= np.radians(theta_)
+	v0x, v0z= polares_a_cartesianas(v0, theta)
+	x0, t0= 0,0
+	tmax= 2*v0*np.sin(theta)/g
+	t= np.linspace(t0, tmax, ni)
+	x, z, vx, vz = integracion(funcion_integracion, t0, tmax, ni, x0, z0, v0x, v0z)
+	
+	#crear la figura
+	fig, ax= plt.subplots()
+	ax.set_xlim(0, np.max(x) + 10)
+	ax.set_ylim(0, np.max(z) + 10)
+	line, = ax.plot([], [], 'b-', label="Trayectoria")
+	point, = ax.plot([], [], 'ro', label="Proyectil")
+	ax.set_title('Trayectoria del proyectil a '+str(theta_)+'º')
+	ax.set_xlabel('x (m)')
+	ax.set_ylabel('z (m)')
+	ax.legend()
+	
+	# Función de inicialización (vaciar los datos)
+	def init():
+		line.set_data([], [])
+		point.set_data([], [])
+		return line, point
+	
+	# Función de actualización para cada frame
+	def update(frame):
+		line.set_data(x[:frame], z[:frame])  # Actualiza la línea
+		point.set_data([x[frame]], [z[frame]])   # Mueve el proyectil
+		return line, point
+		
+	# Crear la animación
+	ani = FuncAnimation(fig, update, frames=range(1, len(x)), init_func=init, interval=5)
+	# Mostrar la animación
+	plt.show()
+
 
 def alcance_neg (theta):
 	'''
@@ -172,10 +213,8 @@ def maximizacion (f):
 	Esta función máximiza el alcance
 	'''
 	resultado = minimize_scalar(f, bounds=(20, 70))
-	return -resultado.fun, resultado.x	
+	return -resultado.fun, resultado.x
 	
-
-
 	
 def funcion_de_error(angulo, objetivox):
 	'''
@@ -183,7 +222,6 @@ def funcion_de_error(angulo, objetivox):
 	donde está el blanco (objetivox).
 	'''
 	return alcance(angulo)- objetivox
-	
 
 
 def angulo_disparo (objetivox):
@@ -196,8 +234,6 @@ def angulo_disparo (objetivox):
 	if objetivox > alcancemaximo:
 		return 'ERROR: El alcance seleccionado es mayor que el alcance máximo del proyectil'
 	else:
-		angteorico1, angteorico2 = angulo_teorico(objetivox)
-		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1, method = 'secant' )
-		#angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2, method = 'secant' )
-		#El angulo 2 da fallo por alguna razon
-		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root)
+		angteorico1= angulo_teorico(objetivox)
+		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1)
+		return 'El ángulo de disparo es: ' +str(angulo1.root)
