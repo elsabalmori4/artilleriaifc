@@ -11,21 +11,21 @@ from scipy.optimize import root_scalar
 import moduloTFC as mod
 
 #Constantes
-g = 9.81 #m/s^2
-k=5e-4
+g = 9.81 #aceleración de la gravedad (m/s^2)
+k=5e-4 #coeficiente de rozamiento
 
 print('Este programa estudia la trayectoria de un proyectil lanzado por un cañón situado que dispara con una velocidad inicial de 500 m/s a una altura de ... m')
 
 #Parámetros de disparo
-v0 = 500*u.m/u.s
-theta = np.pi/4 #rad (45º)
-t0 = 0
-x0 = 0
-z0 = 1.5 
-ni = 1000
+v0 = 500*u.m/u.s #velocidad inicial (m/s)
+theta = np.pi/4 #ándulo de disparo (rad) (45º)
+x0, z0, t0 = 0, 1.5, 0 #posición inicial
+ni = 1000 #número de puntos
 
-#Calculamos el alcance para theta 45º
-v0x, v0z = mod.polares_a_cartesianas(500, theta)
+#convertimos la velocidad a cartesianas
+v0x, v0z = mod.polares_a_cartesianas(v0, theta)
+
+#calculamos el alcance sin rozamiento
 xmax = mod.alcancemax_tiroparabolico(v0x, v0z, z0)
 print('Se calcula el alcance máximo para un ángulo de 45º en un sistema sin rozamiento.')
 print('El alcance máximo es: ' +str(xmax) +' m')
@@ -55,7 +55,7 @@ plt.show()
 print('Se calcula el alcance máximo para un ángulo de 45º en un sistema con rozamiento')
 
 #Integramos obteniendo las posiciones y las velocidades para cada eje
-x, z, vx, vz= mod.integracion(mod.f, t0, tf, ni, x0, z0, v0x, v0z)
+x, z, vx, vz= mod.integracion(mod.f, t0, tmax, ni, x0, z0, v0x, v0z)
 
 #Interpolación:
 #Buscamos el último punto antes de llegar al suelo (índice)
