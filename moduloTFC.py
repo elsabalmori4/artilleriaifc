@@ -172,7 +172,7 @@ def maximizacion (f):
 	Esta función máximiza el alcance
 	'''
 	resultado = minimize_scalar(f, bounds=(20, 70))
-	return -resultado.fun	
+	return -resultado.fun, resultado.x	
 	
 
 
@@ -191,10 +191,13 @@ def angulo_disparo (objetivox):
 	Esta función nos devuelve el ángulo con el que debemos disparar para acertar
 	un objetivo en un punto x usando rootscalar
 	'''
-	if objetivox > maximizacion(alcance_neg):
+	alcancemaximo, thetamaximo = maximizacion(alcance_neg)
+	
+	if objetivox > alcancemaximo:
 		return 'ERROR: El alcance seleccionado es mayor que el alcance máximo del proyectil'
 	else:
 		angteorico1, angteorico2 = angulo_teorico(objetivox)
 		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1 )
-		angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2 )
-		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root) +str(angulo2.root)
+		#angulo2 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico2 )
+		#El angulo 2 da fallo por alguna razon
+		return 'Los ángulos de disparo posibles son: ' +str(angulo1.root)
