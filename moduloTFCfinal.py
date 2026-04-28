@@ -289,14 +289,14 @@ def animar_trayectoria(theta_):
 
 def alcance_neg (theta):
 	'''
-	Esta función nos maximiza la función alcance
+	Esta función nos devuelve la función alcance en negativo
 	'''
 	return -alcance(theta)
 
 	
 def maximizacion (f):
 	'''
-	Esta función máximiza el alcance
+	Esta función minimiza el alcance en negativo
 	'''
 	resultado = minimize_scalar(f, bounds=(20, 70))
 	return -resultado.fun, resultado.x	
