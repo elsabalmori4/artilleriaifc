@@ -162,7 +162,7 @@ def alcance_sin_roz(theta):
 	v0x, v0z = polares_a_cartesianas(v0, alpha) #Obtenemos las componentes iniciales de v
 	x0, z0, t0 = 0, 0, 0
 	xmax = alcancemax_tiroparabolico(v0x, v0z, z0)
-		return xmax
+	return xmax
 
 def representaciones (theta):
 		'''
@@ -201,7 +201,7 @@ def representaciones (theta):
 		#Interpolación:
 		#Buscamos el último punto antes de llegar al suelo (índice)
 		zipos = np.where(z>=0)[0]
-if len(zipos)==0:
+		if len(zipos)==0:
 			return 0
 		zipos = zipos[-1]  # Último índice con z >= 0
 		# Evitar acceder fuera del límite de los índices
@@ -240,8 +240,7 @@ if len(zipos)==0:
 		
 		#ANIMACIÓN
 		animar_trayectoria(theta)
-		return None
-+		
+		return None		
 
 def animar_trayectoria(theta_):
 	'''
