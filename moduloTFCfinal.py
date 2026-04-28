@@ -156,7 +156,22 @@ def alcance_simple (theta):
 		#plt.grid()
 		#plt.show()
 		return xcero
+
+
+
+def alcance_sin_roz(theta):
+	'''
+	Esta función nos calcula el alcance de un proyectil sin considerar el rozamiento
+	'''
+	alpha = np.radians(theta)
+	v = 700
+
+	v0 = v*u.m/u.s
 	
+	v0x, v0z = polares_a_cartesianas(v0, alpha) #Obtenemos las componentes iniciales de v
+	x0, z0, t0 = 0, 1.5, 0
+	xmax = alcancemax_tiroparabolico(v0x, v0z, z0)
+		return xmax
 
 def representaciones (theta):
 		'''
@@ -169,7 +184,7 @@ def representaciones (theta):
 		v0 = v*u.m/u.s
 	
 		v0x, v0z = polares_a_cartesianas(v0, alpha) #Obtenemos las componentes iniciales de v
-		x0, z0, t0 = 0, 1.5, 0
+		x0, z0, t0 = 0, 0, 0
 		ni = 1000
 		xmax = alcancemax_tiroparabolico(v0x, v0z, z0)
 		tmax = 2*v0*np.sin(alpha)/g
