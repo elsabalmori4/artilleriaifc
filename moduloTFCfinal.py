@@ -194,16 +194,25 @@ def representaciones (theta):
 
 		#Interpolación:
 		#Buscamos el último punto antes de llegar al suelo (índice)
-		zipos = np.where(z>=0)[0][-1]
-		#Un índice más: el primer punto de z negativo
-		zineg = zipos+1
-		#El valor que toma z
-		zpos = z[zipos]
-		zneg = z[zineg]
-		#El valor de x para estos z
-		xpos = x[zipos]
-		xneg = x[zineg]
-		
+		zipos = np.where(z>=0)[0]
+if len(zipos)==0:
+			return 0
+		zipos = zipos[-1]  # Último índice con z >= 0
+		# Evitar acceder fuera del límite de los índices
+		if zipos + 1 < len(z):
+			#Un índice más: el primer punto de z negativo
+			zineg = zipos+1
+			#El valor que toma z
+			zpos = z[zipos]
+			zneg = z[zineg]
+			#El valor de x para estos z
+			xpos = x[zipos]
+			xneg = x[zineg]
+			
+			#Valor de x calculado
+			xcero = interpolación(xpos, xneg, zpos, zneg)
+		else: 
+			xcero= x[zipos]
 		#Valor de x calculado
 		xcero = interpolación(xpos, xneg, zpos, zneg)
 
