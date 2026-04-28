@@ -146,15 +146,6 @@ def alcance_simple (theta):
 		puntosxfinal = np.append(puntosx, xcero)
 		puntosz = z[0:zipos]
 		puntoszfinal = np.append(puntosz, 0)
-
-		#Se representa z frente a x
-		#plt.figure()
-		#plt.plot(puntosxfinal, puntoszfinal)
-		#plt.title(r'Trayectoria disparo con rozamiento para $\theta$ = 45º')
-		#plt.xlabel('x (m)')
-		#plt.ylabel('z (m)')
-		#plt.grid()
-		#plt.show()
 		return xcero
 
 
