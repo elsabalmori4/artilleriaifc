@@ -169,7 +169,7 @@ def alcance_sin_roz(theta):
 	v0 = v*u.m/u.s
 	
 	v0x, v0z = polares_a_cartesianas(v0, alpha) #Obtenemos las componentes iniciales de v
-	x0, z0, t0 = 0, 1.5, 0
+	x0, z0, t0 = 0, 0, 0
 	xmax = alcancemax_tiroparabolico(v0x, v0z, z0)
 		return xmax
 
