@@ -96,7 +96,7 @@ def angulo_teorico (objetivox):
 	c = -a
 	angulo1 = (-1+np.sqrt(1-4*a*c))/2*a
 	angulo2 = (-1-np.sqrt(1-4*a*c))/2*a
-	return angulo1, angulo2
+	return angulo1
 
 
 def alcance (theta):
@@ -322,7 +322,7 @@ def angulo_disparo (objetivox):
 	elif objetivox <= 0:
 		return 'ERROR: el alcance seleccionado es negativo'
 	else:
-		angteorico1, angteorico2 = angulo_teorico(objetivox)
+		angteorico = angulo_teorico(objetivox)
 		
-		angulo1 = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico1, method = 'secant')
-		return  angulo1.root
+		angulo = root_scalar(funcion_de_error, args=(objetivox), x0 = angteorico, method = 'secant')
+		return  angulo.root
