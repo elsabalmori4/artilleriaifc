@@ -190,7 +190,7 @@ def representaciones (theta):
 		#Se representa z frente a x
 		plt.figure()
 		plt.plot(posix, posiz)
-		plt.title(r'Trayectoria disparo sin rozamiento para $\theta$ = '+ str(theta)+'º')
+		plt.title(r'Trayectoria disparo sin rozamiento para $\theta$ = %.2f º '+ %theta)
 		plt.xlabel('x (m)')
 		plt.ylabel('z (m)')
 		plt.grid()
@@ -232,7 +232,7 @@ def representaciones (theta):
 		#Se representa z frente a x
 		plt.figure()
 		plt.plot(puntosxfinal, puntoszfinal)
-		plt.title(r'Trayectoria disparo con rozamiento para $\theta$ = '+str(theta)+'º')
+		plt.title(r'Trayectoria disparo con rozamiento para $\theta$ = %.2f º '+ %theta)
 		plt.xlabel('x (m)')
 		plt.ylabel('z (m)')
 		plt.grid()
@@ -262,7 +262,7 @@ def animar_trayectoria(theta_):
 	ax.set_ylim(0, np.max(z) + 10)
 	line, = ax.plot([], [], 'b-', label="Trayectoria")
 	point, = ax.plot([], [], 'ro', label="Proyectil")
-	ax.set_title(r'Trayectoria del proyectil con $\theta$ = '+str(theta_)+'º')
+	ax.set_title(r'Trayectoria del proyectil con $\theta$ = %.2f º '+ %theta_)
 	ax.set_xlabel('x (m)')
 	ax.set_ylabel('z (m)')
 	ax.legend()
